@@ -3,6 +3,7 @@ import { supabase, type Player } from '../supabase'
 import { getName, nameKey } from '../lib/name'
 import { pickCells, computeScore, CELL_COUNT } from '../lib/grid'
 import BingoGrid from '../components/BingoGrid'
+import Leaderboard from '../components/Leaderboard'
 
 type Status = 'loading' | 'need-items' | 'ready' | 'error'
 
@@ -12,6 +13,8 @@ export default function Play() {
   const [gameOpen, setGameOpen] = useState(false)
   const [itemCount, setItemCount] = useState(0)
   const [error, setError] = useState('')
+  const [myKey, setMyKey] = useState('')
+  const [bump, setBump] = useState(0) // force le rafraîchissement du classement
 
   useEffect(() => {
     load()
@@ -23,6 +26,7 @@ export default function Play() {
     const name = getName()
     if (!name) return
     const key = nameKey(name)
+    setMyKey(key)
 
     try {
       // État du jeu
@@ -100,7 +104,10 @@ export default function Play() {
       // Rollback en cas d'échec réseau
       setPlayer({ ...player })
       alert('Impossible d\'enregistrer, réessaie.')
+      return
     }
+    // Rafraîchit le classement en direct tout de suite
+    setBump((b) => b + 1)
   }
 
   if (status === 'loading') return <div className="page"><p className="muted">Chargement de ta grille…</p></div>
@@ -170,6 +177,8 @@ export default function Play() {
           {score.full && <div className="score-full">🎉 GRILLE PLEINE !</div>}
         </div>
       )}
+
+      <Leaderboard currentNameKey={myKey} refreshKey={bump} />
     </div>
   )
 }

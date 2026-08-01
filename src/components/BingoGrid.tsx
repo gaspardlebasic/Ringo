@@ -14,10 +14,13 @@ export default function BingoGrid({ cells, checked, disabled, onToggle }: Props)
   const winners = winningCells(checked)
   const lastTap = useRef<{ index: number; time: number }>({ index: -1, time: 0 })
 
+  // Fenêtre (ms) pour reconnaître un double-tap sur la même case.
+  const DOUBLE_TAP_MS = 500
+
   function handleTap(index: number) {
     if (disabled) return
     const now = Date.now()
-    if (lastTap.current.index === index && now - lastTap.current.time < 350) {
+    if (lastTap.current.index === index && now - lastTap.current.time < DOUBLE_TAP_MS) {
       onToggle(index)
       lastTap.current = { index: -1, time: 0 }
     } else {

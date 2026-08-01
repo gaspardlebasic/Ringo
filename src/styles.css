@@ -245,6 +245,67 @@ button, input, textarea { font-family: inherit; }
 .score-lbl { font-size: 12px; color: var(--muted); }
 .score-full { width: 100%; text-align: center; font-size: 20px; font-weight: 800; color: var(--gold); }
 
+/* ---------- Classement en direct (page Jouer) ---------- */
+.lb-live {
+  margin-top: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.lb-live-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+.lb-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
+  animation: lb-pulse 1.8s infinite;
+}
+@keyframes lb-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  70% { box-shadow: 0 0 0 7px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+.lb-live-list { list-style: none; margin: 0; padding: 0; }
+.lb-live-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 8px;
+  border-radius: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.lb-live-row:last-child { border-bottom: none; }
+.lb-live-me { background: var(--violet-light); }
+.lb-live-rank {
+  flex-shrink: 0;
+  width: 26px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+}
+.lb-live-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lb-live-you { color: var(--violet); font-weight: 700; }
+.lb-live-score { flex-shrink: 0; font-size: 13px; color: var(--muted); text-align: right; }
+.lb-live-score strong { color: var(--violet); font-size: 15px; }
+.lb-live-cases { white-space: nowrap; }
+.lb-live-sep { text-align: center; color: var(--muted); padding: 2px 0; letter-spacing: 3px; }
+
 /* ---------- Notices ---------- */
 .notice {
   background: var(--card);
