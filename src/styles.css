@@ -218,11 +218,25 @@ button, input, textarea { font-family: inherit; }
   transition: transform 0.08s, background 0.15s;
 }
 .cell:active { transform: scale(0.94); }
-.cell-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+/* Conteneur de mesure : occupe toute la case, centre le texte, cache le débordement. */
+.cell-fit {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  line-height: 1.12;
+}
+/* Texte réellement mesuré ; la taille de police est ajustée en JS (auto-fit).
+   overflow-wrap: normal => les mots ne se coupent pas : s'ils débordent, la
+   boucle d'auto-fit détecte le débordement en largeur et réduit la police
+   jusqu'à ce que le mot le plus long tienne entier. break-word en dernier
+   recours (mot vraiment plus large que la case, même à la taille mini). */
+.cell-fit-inner {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 .cell-checked { background: var(--violet); color: #fff; border-color: var(--violet); }
 .cell-winning { background: var(--gold); color: #1f1235; border-color: var(--gold); }

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { winningCells } from '../lib/grid'
 
 interface Props {
@@ -6,6 +6,51 @@ interface Props {
   checked: boolean[]
   disabled?: boolean
   onToggle: (index: number) => void
+}
+
+const FONT_MAX = 14 // px — taille confortable pour les items courts
+const FONT_MIN = 6 // px — plancher pour les items très longs
+
+// Ajuste la taille de police pour que le texte remplisse la case sans déborder.
+// On part de FONT_MAX et on réduit tant que le contenu dépasse (en hauteur ou
+// en largeur). Se recalcule quand la case est redimensionnée (rotation, écran).
+function AutoFitText({ text }: { text: string }) {
+  const boxRef = useRef<HTMLSpanElement>(null)
+
+  useLayoutEffect(() => {
+    const box = boxRef.current
+    const inner = box?.firstElementChild as HTMLElement | undefined
+    if (!box || !inner) return
+
+    const fit = () => {
+      let size = FONT_MAX
+      inner.style.overflowWrap = 'normal' // on essaie d'abord de garder les mots entiers
+      box.style.fontSize = size + 'px'
+      while (
+        size > FONT_MIN &&
+        (inner.scrollHeight > box.clientHeight || inner.scrollWidth > box.clientWidth)
+      ) {
+        size -= 0.5
+        box.style.fontSize = size + 'px'
+      }
+      // Dernier recours : un mot reste plus large que la case même au mini →
+      // on autorise la coupure du mot pour éviter que le texte soit rogné.
+      if (inner.scrollWidth > box.clientWidth) {
+        inner.style.overflowWrap = 'anywhere'
+      }
+    }
+
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(box)
+    return () => ro.disconnect()
+  }, [text])
+
+  return (
+    <span className="cell-fit" ref={boxRef}>
+      <span className="cell-fit-inner">{text}</span>
+    </span>
+  )
 }
 
 // Grille 5x5. On coche une case par DOUBLE TAP (évite les cochages
@@ -43,7 +88,7 @@ export default function BingoGrid({ cells, checked, disabled, onToggle }: Props)
           disabled={disabled}
           aria-pressed={checked[i]}
         >
-          <span className="cell-text">{text}</span>
+          <AutoFitText text={text} />
           {checked[i] && <span className="cell-mark" aria-hidden="true">✓</span>}
         </button>
       ))}
