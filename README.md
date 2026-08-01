@@ -5,11 +5,13 @@ grille 5×5 unique tirée d'un répertoire commun d'« items » (des choses susc
 d'arriver pendant la soirée). On coche les cases au fur et à mesure, et l'organisateur·rice
 clôt la partie pour calculer les scores.
 
+- 🔒 **Mot de passe d'accès** à toute l'appli (demandé à la première visite) pour éviter
+  curieux et bots. Défini dans [`src/config.ts`](src/config.ts) (`APP_PASSWORD`).
 - 📱 **Mobile-first**, on coche les cases au **double-tap**.
-- ➕ N'importe qui peut **ajouter des items** au répertoire commun.
 - 🎯 Chacun·e a une **grille unique**, liée à son prénom (stocké dans le navigateur).
-- ⚙️ Une **page admin** (mot de passe) pour lancer/clore le jeu, voir le classement et
-  supprimer des items.
+- ⚙️ Une **page admin** (mot de passe séparé) pour lancer/clore le jeu, voir le classement,
+  **ajouter** et supprimer des items.
+- 🏆 **Classement en direct** sous la grille pendant la partie.
 - 💾 L'état persiste (stocké en base) même après un refresh.
 
 Stack : **React + Vite** (site statique) + **Supabase** (base Postgres gratuite) +
@@ -87,8 +89,9 @@ jour J ! 🎉
 
 ## Comment on joue
 
-1. Chaque invité·e ouvre le lien → saisit son **prénom** (mémorisé sur son téléphone).
-2. Avant/pendant le mariage, tout le monde peut **ajouter des items** (onglet Ajouter).
+1. Chaque invité·e ouvre le lien → saisit le **mot de passe d'accès**, puis son **prénom**
+   (les deux mémorisés sur son téléphone).
+2. L'organisateur·rice **ajoute les items** depuis la page **Admin** (avant le mariage).
 3. L'organisateur·rice va sur **Admin** (mot de passe), et clique **Lancer le jeu**.
 4. Onglet **Jouer** : une grille unique apparaît. **Double-tap** sur une case pour la
    cocher quand l'événement se produit. Une ligne/colonne/diagonale complète = un « bingo ».

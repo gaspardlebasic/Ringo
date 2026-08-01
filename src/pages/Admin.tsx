@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase, type Item, type Player } from '../supabase'
 import { computeScore, CELL_COUNT } from '../lib/grid'
 import { ADMIN_PASSWORD } from '../config'
+import { getName } from '../lib/name'
 
 const UNLOCK_KEY = 'ringo.admin.unlocked'
 
@@ -56,6 +57,8 @@ function AdminPanel() {
   const [items, setItems] = useState<Item[]>([])
   const [players, setPlayers] = useState<Player[]>([])
   const [loading, setLoading] = useState(true)
+  const [newItem, setNewItem] = useState('')
+  const [savingItem, setSavingItem] = useState(false)
 
   async function refresh() {
     setLoading(true)
@@ -78,6 +81,21 @@ function AdminPanel() {
   async function setGame(open: boolean) {
     await supabase.from('game_state').update({ is_open: open, updated_at: new Date().toISOString() }).eq('id', 1)
     setGameOpen(open)
+  }
+
+  async function addItem(e: React.FormEvent) {
+    e.preventDefault()
+    const v = newItem.trim()
+    if (!v) return
+    setSavingItem(true)
+    const { error } = await supabase.from('items').insert({ text: v, added_by: getName() ?? 'Admin' })
+    setSavingItem(false)
+    if (error) {
+      alert('Erreur : ' + error.message)
+      return
+    }
+    setNewItem('')
+    refresh()
   }
 
   async function deleteItem(id: number) {
@@ -158,6 +176,22 @@ function AdminPanel() {
       {/* Répertoire d'items */}
       <section className="admin-section">
         <h2>Répertoire ({items.length} items)</h2>
+        <p className="muted small">
+          Propose des choses susceptibles d'arriver pendant le mariage. Elles iront dans le
+          répertoire commun d'où sont tirées les grilles.
+        </p>
+        <form onSubmit={addItem} className="add-form">
+          <textarea
+            value={newItem}
+            onChange={(e) => setNewItem(e.target.value)}
+            placeholder="Ex : Le curé fait une blague"
+            rows={2}
+            maxLength={140}
+          />
+          <button type="submit" className="btn btn-primary" disabled={savingItem || !newItem.trim()}>
+            {savingItem ? 'Ajout…' : 'Ajouter un item'}
+          </button>
+        </form>
         <ul className="item-list">
           {items.map((it) => (
             <li key={it.id} className="item-row">

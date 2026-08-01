@@ -18,3 +18,10 @@ export const SUPABASE_ANON_KEY =
 // c'est juste un garde-fou pour éviter les clics accidentels.
 export const ADMIN_PASSWORD =
   import.meta.env.VITE_ADMIN_PASSWORD || 'admin'
+
+// Mot de passe d'accès à TOUTE l'application (demandé à la première visite).
+// Garde-fou léger pour éviter les curieux et les bots. Comme il est présent
+// dans le code du site, ce n'est pas une sécurité forte, mais ça suffit pour
+// un bingo entre invités.
+export const APP_PASSWORD =
+  import.meta.env.VITE_APP_PASSWORD || 'cfz'

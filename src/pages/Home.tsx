@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="page home">
-      <h1 className="home-title">Bienvenue, {getName()} 👋</h1>
+      <h1 className="home-title script">Bienvenue, {getName()} 👋</h1>
       <p className="home-lead">
         Repère les moments cultes du mariage sur ta grille, et coche-les au fil de la soirée !
       </p>
@@ -39,11 +39,12 @@ export default function Home() {
           <span className="hc-title">Jouer</span>
           <span className="hc-sub">Ta grille de bingo</span>
         </Link>
-        <Link to="/add" className="home-card">
-          <span className="hc-icon">➕</span>
-          <span className="hc-title">Ajouter des items</span>
+        <Link to="/admin" className="home-card">
+          <span className="hc-icon">⚙️</span>
+          <span className="hc-title">Admin</span>
           <span className="hc-sub">
-            {itemCount === null ? '…' : `${itemCount} item${itemCount > 1 ? 's' : ''} dans le répertoire`}
+            Lancer/clore le jeu · ajouter des items
+            {itemCount !== null && ` (${itemCount})`}
           </span>
         </Link>
       </div>

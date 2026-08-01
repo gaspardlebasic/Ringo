@@ -11,9 +11,15 @@
   --green: #16a34a;
   --red: #dc2626;
   --shadow: 0 4px 16px rgba(80, 40, 160, 0.10);
+  --font-title: 'Dancing Script', 'Segoe Script', cursive;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
+
+/* Titres en police manuscrite (mariage) ; le corps reste sans-serif lisible. */
+.script { font-family: var(--font-title); font-weight: 700; }
+h1, h2 { font-family: var(--font-title); font-weight: 700; letter-spacing: 0.5px; }
 
 html, body, #root {
   margin: 0;
@@ -21,7 +27,7 @@ html, body, #root {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -49,7 +55,9 @@ button, input, textarea { font-family: inherit; }
   background: var(--violet);
   color: #fff;
 }
-.brand { font-weight: 800; font-size: 20px; color: #fff; text-decoration: none; }
+.brand { display: flex; align-items: center; gap: 6px; color: #fff; text-decoration: none; }
+.brand-logo { font-size: 22px; }
+.brand-name { font-size: 28px; line-height: 1; }
 .who {
   background: rgba(255, 255, 255, 0.2);
   padding: 4px 12px;
@@ -59,6 +67,7 @@ button, input, textarea { font-family: inherit; }
 }
 
 .content { flex: 1; padding: 16px; padding-bottom: 90px; max-width: 560px; margin: 0 auto; width: 100%; }
+.content-full { padding-bottom: 24px; } /* pas de barre du bas (mode jeu) */
 
 .tabbar {
   position: fixed;
@@ -105,7 +114,7 @@ button, input, textarea { font-family: inherit; }
   box-shadow: var(--shadow);
 }
 .name-card .logo { font-size: 48px; }
-.name-card h1 { margin: 8px 0 0; font-size: 32px; color: var(--violet); }
+.name-card h1 { margin: 8px 0 0; font-size: 46px; color: var(--violet); line-height: 1.1; }
 .subtitle { margin: 4px 0 24px; color: var(--muted); }
 .name-card label { display: block; text-align: left; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
 .name-card input, .add-form textarea {
@@ -135,7 +144,7 @@ button, input, textarea { font-family: inherit; }
 .error-text { color: var(--red); font-size: 14px; margin: 8px 0 0; }
 
 /* ---------- Home ---------- */
-.home-title { font-size: 26px; margin: 4px 0 8px; }
+.home-title { font-size: 34px; margin: 4px 0 8px; line-height: 1.1; }
 .home-lead { color: var(--muted); margin: 0 0 16px; }
 .status-banner { margin-bottom: 16px; }
 .badge { display: inline-block; padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; }
@@ -259,7 +268,7 @@ button, input, textarea { font-family: inherit; }
   align-items: center;
   gap: 8px;
   margin: 0 0 10px;
-  font-size: 17px;
+  font-size: 22px;
 }
 .lb-live-dot {
   width: 9px;
@@ -364,7 +373,7 @@ button, input, textarea { font-family: inherit; }
   margin-bottom: 16px;
   box-shadow: var(--shadow);
 }
-.admin-section h2 { margin-top: 0; font-size: 18px; }
+.admin-section h2 { margin-top: 0; font-size: 22px; }
 .game-control { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
 .btn-danger { background: var(--red); }
 
@@ -378,4 +387,5 @@ button, input, textarea { font-family: inherit; }
 @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
-h1 { font-size: 24px; }
+h1 { font-size: 30px; }
+.notice h2 { font-size: 24px; }
