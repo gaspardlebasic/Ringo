@@ -15,6 +15,14 @@ clôt la partie pour calculer les scores.
 Stack : **React + Vite** (site statique) + **Supabase** (base Postgres gratuite) +
 **GitHub Pages** pour l'hébergement. Tout est gratuit.
 
+> ### 🌐 En ligne : **https://gaspardlebasic.github.io/Ringo/**
+> Le site est déployé et connecté à Supabase. À chaque `git push` sur `main`, GitHub
+> Actions reconstruit et redéploie automatiquement (aucun secret à configurer : la config
+> publique est dans [`src/config.ts`](src/config.ts)).
+>
+> - **Mot de passe admin** actuel : `admin` (à changer dans `src/config.ts` si besoin).
+> - Le jeu est **fermé** par défaut : va sur **Admin → Lancer le jeu** le jour J.
+
 ---
 
 ## 1. Créer la base de données (Supabase) — ~5 min
@@ -40,49 +48,40 @@ Stack : **React + Vite** (site statique) + **Supabase** (base Postgres gratuite)
 
 ## 2. Tester en local (facultatif)
 
+La config Supabase est déjà intégrée dans [`src/config.ts`](src/config.ts), donc pas
+besoin de `.env` :
+
 ```bash
 npm install
-cp .env.example .env      # puis colle tes 2 valeurs Supabase dedans
 npm run dev
 ```
 
-Ouvre l'URL affichée (http://localhost:5173). Le fichier `.env` ressemble à :
-
-```
-VITE_SUPABASE_URL=https://xxxx.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGci...
-VITE_ADMIN_PASSWORD=le-mot-de-passe-admin-de-ton-choix
-```
+Ouvre l'URL affichée (http://localhost:5173). Tu peux surcharger la config avec un fichier
+`.env` (variables `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_ADMIN_PASSWORD`) si
+un jour tu veux pointer vers une autre base.
 
 ---
 
-## 3. Déployer sur GitHub Pages — ~5 min
+## 3. Déploiement (déjà en place)
 
-1. Crée un dépôt GitHub (ex. `Ringo`) et pousse ce dossier dedans :
+Le dépôt est déjà connecté à GitHub Pages via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+Il n'y a **rien à reconfigurer** : à chaque `git push` sur `main`, le site est reconstruit
+et redéployé automatiquement sur **https://gaspardlebasic.github.io/Ringo/**.
 
-   ```bash
-   git init
-   git add .
-   git commit -m "Ringo"
-   git branch -M main
-   git remote add origin https://github.com/TON-PSEUDO/Ringo.git
-   git push -u origin main
-   ```
+Pour changer quelque chose (items de départ, couleurs, mot de passe admin…), édite le code,
+puis :
 
-2. Sur GitHub → onglet **Settings** → **Secrets and variables** → **Actions** →
-   **New repository secret**. Crée ces **3 secrets** :
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_ADMIN_PASSWORD`
+```bash
+git add -A && git commit -m "mon changement" && git push
+```
 
-3. Sur GitHub → **Settings** → **Pages** → **Build and deployment** → **Source** :
-   choisis **GitHub Actions**.
+Suis le déploiement dans l'onglet **Actions** du dépôt. Partage le lien aux invités le
+jour J ! 🎉
 
-4. Le déploiement se lance automatiquement à chaque `push` sur `main` (onglet **Actions**
-   pour suivre). Une fois fini, ton bingo est en ligne à :
-   `https://TON-PSEUDO.github.io/Ringo/`
-
-Partage ce lien aux invités le jour J ! 🎉
+> Le dépôt est **public** (nécessaire pour GitHub Pages gratuit). La clé Supabase `anon`
+> est faite pour être publique et l'accès aux données est volontairement permissif (bingo
+> entre invités). Le mot de passe admin (`src/config.ts`) est un simple garde-fou visible
+> dans le code — ce n'est pas un secret fort.
 
 ---
 
