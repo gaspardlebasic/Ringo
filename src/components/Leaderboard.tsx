@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { computeScore } from '../lib/grid'
 
@@ -71,6 +72,7 @@ export default function Leaderboard({
         🏆 Classement en direct
         <span className="lb-live-dot" title="Mis à jour automatiquement" />
       </h2>
+      <p className="lb-live-hint">👉 Touche un nom pour suivre sa grille en direct</p>
       <ol className="lb-live-list">
         {top.map((r, i) => (
           <LbRow key={r.name_key} rank={i} row={r} me={r.name_key === currentNameKey} />
@@ -92,17 +94,23 @@ function medal(rank: number): string {
 
 function LbRow({ rank, row, me }: { rank: number; row: Row; me: boolean }) {
   return (
-    <li className={'lb-live-row' + (me ? ' lb-live-me' : '')}>
-      <span className="lb-live-rank">{medal(rank)}</span>
-      <span className="lb-live-name">
-        {row.name}
-        {me && <span className="lb-live-you"> (toi)</span>}
-        {row.full && ' 🎉'}
-      </span>
-      <span className="lb-live-score">
-        <strong>{row.lines}</strong> ligne{row.lines > 1 ? 's' : ''}
-        <span className="lb-live-cases"> · {row.checkedCount} case{row.checkedCount > 1 ? 's' : ''}</span>
-      </span>
+    <li>
+      <Link
+        className={'lb-live-row' + (me ? ' lb-live-me' : '')}
+        to={`/suivre?j=${encodeURIComponent(row.name_key)}`}
+      >
+        <span className="lb-live-rank">{medal(rank)}</span>
+        <span className="lb-live-name">
+          {row.name}
+          {me && <span className="lb-live-you"> (toi)</span>}
+          {row.full && ' 🎉'}
+        </span>
+        <span className="lb-live-score">
+          <strong>{row.lines}</strong> ligne{row.lines > 1 ? 's' : ''}
+          <span className="lb-live-cases"> · {row.checkedCount} case{row.checkedCount > 1 ? 's' : ''}</span>
+        </span>
+        <span className="lb-live-chevron" aria-hidden="true">›</span>
+      </Link>
     </li>
   )
 }

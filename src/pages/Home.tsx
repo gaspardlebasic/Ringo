@@ -39,6 +39,11 @@ export default function Home() {
           <span className="hc-title">Jouer</span>
           <span className="hc-sub">Ta grille de bingo</span>
         </Link>
+        <Link to="/suivre" className="home-card">
+          <span className="hc-icon">👀</span>
+          <span className="hc-title">Suivre</span>
+          <span className="hc-sub">Voir la grille d'un·e autre joueur·euse</span>
+        </Link>
         <Link to="/admin" className="home-card">
           <span className="hc-icon">⚙️</span>
           <span className="hc-title">Admin</span>

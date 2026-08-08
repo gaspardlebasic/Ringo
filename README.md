@@ -12,6 +12,8 @@ clôt la partie pour calculer les scores.
 - ⚙️ Une **page admin** (mot de passe séparé) pour lancer/clore le jeu, voir le classement,
   **ajouter** et supprimer des items.
 - 🏆 **Classement en direct** sous la grille pendant la partie.
+- 👀 **Suivre un·e joueur·euse** : voir sa grille et ses cases cochées en direct
+  (depuis le classement ou l'accueil).
 - 💾 L'état persiste (stocké en base) même après un refresh.
 
 Stack : **React + Vite** (site statique) + **Supabase** (base Postgres gratuite) +

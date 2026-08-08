@@ -5,6 +5,7 @@ import App from './App'
 import Home from './pages/Home'
 import Play from './pages/Play'
 import Admin from './pages/Admin'
+import Spectate from './pages/Spectate'
 import './styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route element={<App />}>
           <Route path="/" element={<Home />} />
           <Route path="/play" element={<Play />} />
+          <Route path="/suivre" element={<Spectate />} />
           <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
